@@ -10,10 +10,62 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Planned
-- Waitlist backend integration (Supabase / Resend)
-- Kiswahili language toggle
-- Google Analytics 4 integration
-- og:image social share card
+- Waitlist backend integration (Resend / Supabase)
+- Kiswahili language toggle (`react-i18next`)
+- Analytics integration (PostHog)
+- `og:image` social share card (1200×630)
+
+---
+
+## [1.1.0] — 2026-03-24
+
+### Added
+- **Hero background image** — Unsplash Nairobi skyline with layered gradient
+  overlay for text legibility; image loads eagerly as LCP asset
+- **Coverage card images** — Each of the 6 legal area cards now has a
+  contextual Unsplash header image (office, finance, shipping, HR, tech, nature)
+  with hover zoom effect and gradient overlay
+- **Testimonial avatars** — All 3 testimonial cards now display real portrait
+  photos from Unsplash with gold-border treatment
+- **Testimonial star ratings** — 5-star row added above each quote
+- **HowItWorks image strip** — Mobile-only Unsplash process image with
+  descriptive label; hidden on desktop where the step grid dominates
+- **CTA background tint** — Subtle Unsplash image at 10% opacity behind the
+  waitlist section for visual depth
+
+### Changed (Mobile Responsiveness)
+- **Nav** — Hamburger now renders an animated X on open; mobile menu is
+  full-screen overlay with body scroll lock and large tap targets
+- **Hero** — Single-column on mobile; dashboard mockup hidden below `lg`;
+  floating pills replaced with compact status pills at bottom of hero on mobile;
+  stats strip font sizes scale with `clamp()`
+- **HowItWorks** — Steps grid now `1-col → 2-col (sm) → 4-col (lg)`;
+  intro row responsive two-up layout
+- **Features grid** — Now `1-col → 2-col (md) → 3-col (lg)` via CSS
+- **Coverage grid** — Now `1-col → 2-col (sm) → 3-col (lg)` via Tailwind
+- **Testimonials grid** — Now `1-col → 3-col (md)` via Tailwind
+- **ComplianceChecklist** — Checklist + card stacks to `1-col` below `lg`
+- **Footer** — Grid changes `1-col → 2-col (sm) → 4-col (lg)`;
+  legal links row stacks vertically on mobile
+- **CTA form** — `flex-col` on mobile, `flex-row` on `sm+`; border-radius
+  adapts correctly to both layouts
+- **Section padding** — All sections use `.section-pad` class:
+  `6rem 4rem` → `5rem 2.5rem (lg)` → `4rem 1.25rem (mobile)`
+
+### Fixed
+- Inline `gridTemplateColumns` styles replaced with Tailwind responsive classes
+  throughout all section components
+- `section-pad` utility class centralises all section padding
+- `img-card` CSS class provides consistent image zoom + overlay treatment
+- `hero-image-overlay` gradient tuned to allow right-side image to show on
+  desktop while keeping left-side text fully legible
+
+### Technical
+- All Unsplash images use `loading="lazy"` except hero (eager, LCP)
+- Images sized at 2× breakpoint max-width with `?w=` param for bandwidth savings
+- `useWaitlist` hook now drives `CTASection` (replaces inline state)
+- Nav body-scroll lock on mobile menu open/close
+- Hamburger spans animate to animated X via inline transform styles
 
 ---
 
@@ -21,56 +73,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ### Added
 - **Project scaffold** — Vite 5 + React 18 + Tailwind CSS 3 setup
-- **Nav** — Fixed top navigation with scroll-aware glassmorphism background
-  and mobile hamburger menu with slide-down panel
-- **Hero section** — Two-column layout with headline, stats strip, and
-  interactive compliance dashboard mockup
-- **DashboardCard** — Animated SVG score ring (GSAP ScrollTrigger), compliance
-  item list with status badges, floating compliance pills
-- **Ticker** — Infinite scrolling pain-points strip with CSS animation;
-  pauses on hover
-- **HowItWorks** — 4-step numbered process grid with hover states
-- **Features** — 6-card border-collapse grid with per-card hover shimmer overlay
-- **Coverage** — 6 legal area cards (Corporate, Tax, Trade, Employment, Data, County)
-  with pill tags and top-line reveal animation
-- **ComplianceChecklist** — 7-item 2026 readiness checklist with
-  done / warn / info indicators alongside company profile card mockup
-- **Testimonials** — 3 testimonial cards with decorative quotemark
-- **CTASection** — Waitlist email form with client-side validation,
-  error highlight, and success confirmation state
-- **Footer** — 4-column grid with brand info, link columns, and legal row
-- **FAB** — Floating "Chat with an Advocate" button with expanding label on hover
-- **Logo** — Reusable SVG brand mark component (hexagon + balance scale)
-- **SectionTag** — Reusable pill label component
-- **Design tokens** — Full CSS custom property palette + Tailwind extension
-- **GSAP animations** — Hero entrance timeline, scroll-reveal for all sections,
-  staggered checklist, coverage card entrance, floating pill bobs
-- **Vercel config** — `vercel.json` with SPA rewrites and asset cache headers
-- **Documentation** — README, CHANGELOG, TODO, CONTRIBUTING, ARCHITECTURE,
-  and 4 Architecture Decision Records (ADRs)
-
-### Technical
-- Single-file HTML prototype refactored into 14 React components
-- CSS separated into global `index.css` (Tailwind layers + custom properties)
-  and component-level Tailwind utilities
-- GSAP registered once in `App.jsx`; ScrollTrigger cleanup on unmount
-- Vite manual chunk splitting: `vendor` (React) and `gsap` chunks
-- Mobile-first responsive breakpoints at 960px
+- Full landing page: Hero, Ticker, HowItWorks, Features, Coverage,
+  ComplianceChecklist, Testimonials, CTASection, Footer
+- GSAP entrance timeline + ScrollTrigger scroll-reveals
+- DashboardCard with animated SVG score ring
+- FAB floating chat button
+- Vercel deployment configuration
+- Documentation: README, CHANGELOG, TODO, CONTRIBUTING, ARCHITECTURE, 4 ADRs
 
 ---
 
-## [0.1.0] — 2026-01-15
-
-### Added
-- Initial single-file HTML prototype (`mwango-sheria.html`)
-- All sections: Hero, Ticker, How It Works, Features, Coverage,
-  Compliance Checklist, Testimonials, CTA, Footer
-- GSAP animations via CDN
-- Google Fonts: Cormorant Garamond + Outfit
-- Brand identity: dark forest/ochre palette, hexagon scale logo
-
----
-
-[Unreleased]: https://github.com/your-org/mwango-sheria/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/your-org/mwango-sheria/compare/v0.1.0...v1.0.0
-[0.1.0]: https://github.com/your-org/mwango-sheria/releases/tag/v0.1.0
+[Unreleased]: https://github.com/your-org/mwango-sheria/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/your-org/mwango-sheria/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/your-org/mwango-sheria/releases/tag/v1.0.0

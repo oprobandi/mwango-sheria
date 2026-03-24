@@ -1,13 +1,19 @@
-# Mwango Sheria — V1.0
+# Mwango Sheria — V1.3
 
-> **Kenya's Business Law Intelligence Platform**  
+> **Kenya's Business Law Intelligence Platform**
 > AI-powered compliance engine for Kenyan entrepreneurs.
 
 ---
 
-## Overview
+## What's New in V1.3
 
-Mwango Sheria is a React + Vite + Tailwind CSS landing page and waitlist application. It introduces the platform's features, law coverage areas, and compliance tooling to prospective users and collects early-access sign-ups.
+- 🖼️ **Unsplash imagery** — Hero background, coverage card headers, testimonial avatars, CTA background tint
+- 📱 **Full mobile responsive** — All grids, nav, forms, and section padding properly responsive across 320px–1440px+
+- ✨ **Animated hamburger** → fullscreen mobile menu with body scroll lock
+- ⭐ **Testimonial star ratings** + avatar photos
+- 🗂️ 2 new ADRs: image strategy (ADR-005) and responsive approach (ADR-006)
+
+See `docs/CHANGELOG.md` for the full diff.
 
 ---
 
@@ -20,6 +26,7 @@ Mwango Sheria is a React + Vite + Tailwind CSS landing page and waitlist applica
 | Styling     | Tailwind CSS 3 + CSS Custom Properties  |
 | Animations  | GSAP 3 + ScrollTrigger                  |
 | Fonts       | Cormorant Garamond + Outfit (Google)    |
+| Images      | Unsplash CDN (lazy-loaded, sized)       |
 | Deployment  | Vercel (static SPA)                     |
 
 ---
@@ -27,160 +34,127 @@ Mwango Sheria is a React + Vite + Tailwind CSS landing page and waitlist applica
 ## Project Structure
 
 ```
-mwango-sheria-v1/
-├── index.html                        # Vite HTML shell
-├── vite.config.js                    # Vite + React plugin, chunk splitting
-├── tailwind.config.js                # Design token extensions
+mwango-sheria-v1.1/
+├── index.html
+├── vite.config.js
+├── tailwind.config.js
 ├── postcss.config.js
-├── vercel.json                       # SPA rewrites + cache headers
+├── vercel.json
 ├── package.json
 ├── .gitignore
-├── .env.example                      # Environment variable template
+├── .env.example
 ├── README.md
 │
 ├── src/
-│   ├── main.jsx                      # React DOM root mount
-│   ├── App.jsx                       # Layout shell + global GSAP setup
-│   ├── index.css                     # @tailwind directives, base styles, tokens
+│   ├── main.jsx
+│   ├── App.jsx
+│   ├── index.css                 ← section-pad, img-card, hero-image-overlay utilities
 │   │
 │   ├── data/
-│   │   └── site.data.js              # ALL static copy, structured data, constants
+│   │   └── site.data.js
 │   │
 │   ├── hooks/
-│   │   ├── useScrollSpy.js           # IntersectionObserver active-section hook
-│   │   └── useWaitlist.js            # Form state, validation, submission
+│   │   ├── useScrollSpy.js
+│   │   └── useWaitlist.js
 │   │
 │   └── components/
 │       ├── layout/
-│       │   ├── Nav.jsx               # Fixed nav, scroll-blur, mobile hamburger
-│       │   └── Footer.jsx            # 4-column footer with legal links
+│       │   ├── Nav.jsx           ← fullscreen mobile menu, animated X hamburger
+│       │   └── Footer.jsx        ← 4→2→1 col responsive
 │       │
 │       ├── sections/
-│       │   ├── Hero.jsx              # Viewport hero + GSAP entrance timeline
-│       │   ├── Ticker.jsx            # Scrolling pain-points strip
-│       │   ├── HowItWorks.jsx        # 4-step process grid
-│       │   ├── Features.jsx          # 6-card capability grid
-│       │   ├── Coverage.jsx          # 6 law coverage area cards
-│       │   ├── ComplianceChecklist.jsx  # Checklist + CompanyProfileCard
-│       │   ├── Testimonials.jsx      # 3 testimonial cards
-│       │   └── CTASection.jsx        # Waitlist email CTA
+│       │   ├── Hero.jsx          ← Unsplash bg, single-col mobile
+│       │   ├── Ticker.jsx
+│       │   ├── HowItWorks.jsx    ← 4→2→1 col, mobile image strip
+│       │   ├── Features.jsx      ← 3→2→1 col
+│       │   ├── Coverage.jsx      ← Unsplash card images, 3→2→1 col
+│       │   ├── ComplianceChecklist.jsx  ← 2→1 col
+│       │   ├── Testimonials.jsx  ← Unsplash avatars, stars, 3→1 col
+│       │   └── CTASection.jsx    ← Unsplash bg tint, stacked form on mobile
 │       │
 │       └── ui/
-│           ├── Logo.jsx              # SVG hexagon + wordmark
-│           ├── SectionTag.jsx        # Pill section label
-│           ├── DashboardCard.jsx     # Hero dashboard mockup (animated ring)
-│           ├── CompanyProfileCard.jsx  # Compliance status rows + health bar
-│           └── FAB.jsx               # Floating "Chat with Advocate" button
+│           ├── Logo.jsx
+│           ├── SectionTag.jsx
+│           ├── DashboardCard.jsx
+│           ├── CompanyProfileCard.jsx
+│           └── FAB.jsx
 │
 └── docs/
-    ├── TODO.md                       # Backlog and upcoming work
-    ├── CHANGELOG.md                  # Version history
-    ├── CONTRIBUTING.md               # Developer guide
-    ├── ARCHITECTURE.md               # System design overview
+    ├── TODO.md
+    ├── CHANGELOG.md
+    ├── CONTRIBUTING.md
+    ├── ARCHITECTURE.md
     └── adr/
         ├── 0001-react-vite-stack.md
         ├── 0002-tailwind-styling.md
         ├── 0003-gsap-animations.md
-        └── 0004-waitlist-api.md
+        ├── 0004-waitlist-api.md
+        ├── 0005-unsplash-images.md    ← NEW
+        └── 0006-mobile-responsive.md ← NEW
 ```
 
 ---
 
 ## Quick Start
 
-### Prerequisites
-- Node.js ≥ 18.x
-- npm ≥ 9.x
-
-### Install & Run
-
 ```bash
 npm install
+npm run dev      # → http://localhost:5173
+npm run build    # → /dist
+```
+
+---
+
+## Deploy to Vercel
+
+```bash
+# Unzip & enter project
+unzip ~/Downloads/"Mwango Sheria V1.3.zip" -d ~/
+cd ~/mwango-sheria-v1.1
+
+# Install & run locally
+npm install
 npm run dev
-# → http://localhost:5173
-```
 
-### Build for Production
+# Initialise git and push to GitHub
+git init && git add . && git commit -m "feat: Mwango Sheria v1.1.0 — images & mobile responsive"
+gh repo create mwango-sheria --public --source=. --remote=origin --push
 
-```bash
-npm run build
-# Output → /dist (ready for Vercel / Netlify / S3)
-```
-
-### Preview Production Build Locally
-
-```bash
-npm run preview
+# Deploy to Vercel
+npm run deploy
 ```
 
 ---
 
-## Deploying to Vercel
+## Responsive Breakpoints
 
-### Option A — Vercel CLI
-
-```bash
-npm i -g vercel
-vercel          # follow prompts
-vercel --prod   # promote to production
-```
-
-### Option B — Git Integration (recommended)
-
-1. Push this repository to GitHub
-2. Open [vercel.com/new](https://vercel.com/new) and import the repo
-3. Vercel auto-detects Vite — no extra configuration required
-4. `vercel.json` is already included for SPA rewrites and immutable asset caching
+| Breakpoint | Width   | Key changes                                     |
+|------------|---------|-------------------------------------------------|
+| Mobile     | < 640px | Single-column everything, stacked forms, fullscreen nav menu |
+| `sm`       | ≥ 640px | 2-col grids begin, form goes horizontal         |
+| `md`       | ≥ 768px | 3-col testimonials, features go 2-col           |
+| `lg`       | ≥ 1024px| Full 3–4 col layouts, hero dashboard visible    |
 
 ---
 
-## Environment Variables
+## Image Credits
 
-No variables are required for the static V1.0 landing page.
-
-When you wire up the real waitlist API, copy `.env.example` to `.env.local`:
-
-```bash
-cp .env.example .env.local
-```
-
-Then fill in:
-
-```env
-VITE_WAITLIST_API_URL=https://your-app.vercel.app/api/waitlist
-```
-
-See `docs/adr/0004-waitlist-api.md` for the full serverless function design.
+All images sourced from [Unsplash](https://unsplash.com) under the Unsplash Licence.
+See `docs/adr/0005-unsplash-images.md` for full details and the replacement plan for V2.
 
 ---
 
 ## Design Tokens
 
-All brand colours are defined as CSS custom properties in `src/index.css`
-and mirrored as Tailwind theme extensions in `tailwind.config.js`:
-
 | Token       | Hex       | Usage                          |
 |-------------|-----------|--------------------------------|
 | `--void`    | `#060C07` | Page background                |
-| `--forest`  | `#0C1A0E` | Alternating section background |
-| `--bark`    | `#172419` | Card background (dark)         |
-| `--panel`   | `#1C2B1E` | Dashboard / overlay panels     |
+| `--forest`  | `#0C1A0E` | Section alternates             |
 | `--ochre`   | `#C47B2A` | Primary accent, CTAs           |
-| `--gold`    | `#DFA042` | Hover states                   |
 | `--amber`   | `#F0C070` | Italic emphasis, highlights    |
 | `--cream`   | `#F4ECD8` | Primary headings               |
-| `--sand`    | `#B8A880` | Body text                      |
-| `--stone`   | `#6B6050` | Muted / secondary text         |
+| `--stone`   | `#6B6050` | Body / muted text              |
 
 ---
 
-## Contributing
-
-See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for branch strategy,
-commit conventions, and PR guidelines.
-
----
-
-## Licence
-
-Proprietary — © 2026 Mwango Sheria Technologies Ltd. All rights reserved.
+© 2026 Mwango Sheria Technologies Ltd. All rights reserved.
