@@ -1,13 +1,12 @@
 /**
- * Hero.jsx — V1.3 Light Mode
- * Daytime Nairobi skyline, light gradient overlay, clean split layout.
+ * Hero.jsx — V1.4
+ * CSS-var driven, works in both light and dark modes.
  */
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import DashboardCard from '../ui/DashboardCard.jsx'
 
-/* Daytime Nairobi CBD aerial */
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=1800&auto=format&fit=crop&q=80'
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=1800&auto=format&fit=crop&q=80'
 
 const STATS = [
   { num: '7.4M+', label: 'SMEs in Kenya' },
@@ -37,76 +36,61 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center z-[1] overflow-hidden">
-
-      {/* Background image with light overlay */}
+    <section
+      className="relative min-h-screen flex items-center z-[1] overflow-hidden"
+      style={{ background: 'var(--bg-page)' }}
+    >
+      {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={HERO_IMAGE}
-          alt="Nairobi CBD skyline"
-          className="w-full h-full object-cover object-center"
-          loading="eager"
-          decoding="async"
-        />
-        <div className="hero-image-overlay" />
-        {/* Bottom fade to section background */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, #F8F4EE, transparent)' }}
-        />
+        <img src={HERO_IMAGE} alt="Nairobi CBD skyline" className="w-full h-full object-cover object-center" loading="eager" decoding="async" />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(108deg, var(--hero-overlay))` }} />
+        <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none" style={{ background: 'linear-gradient(to top, var(--hero-fade), transparent)' }} />
       </div>
 
-      {/* Ambient warm glow */}
       <div
         className="absolute pointer-events-none z-[1]"
-        style={{
-          left: '-5vw', top: '15vh', width: '55vw', height: '55vh',
-          background: 'radial-gradient(ellipse, rgba(180,110,20,0.07) 0%, transparent 70%)',
-        }}
+        style={{ left: '-5vw', top: '15vh', width: '55vw', height: '55vh', background: 'radial-gradient(ellipse, var(--accent-soft) 0%, transparent 70%)' }}
       />
 
-      {/* Main grid */}
-      <div className="relative z-[2] w-full px-5 sm:px-10 lg:px-16 pt-28 pb-20
-                      grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-[1400px] mx-auto">
+      {/* Main grid — max-width desktop container */}
+      <div className="relative z-[2] w-full px-5 sm:px-10 lg:px-16 xl:px-24 pt-28 pb-20
+                      grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center
+                      max-w-[1440px] mx-auto">
 
-        {/* LEFT: Text */}
-        <div>
-          {/* Eyebrow */}
+        {/* LEFT */}
+        <div className="max-w-[600px]">
           <div
             id="hero-eyebrow"
-            className="inline-flex items-center gap-2.5 text-[0.68rem] font-medium text-[#B86520] tracking-[0.28em] uppercase mb-7"
-            style={{ opacity: 0 }}
+            className="inline-flex items-center gap-2.5 text-[0.68rem] font-medium tracking-[0.28em] uppercase mb-7"
+            style={{ opacity: 0, color: 'var(--accent)' }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B86520] pulse-dot" />
+            <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: 'var(--accent)' }} />
             Kenya Business Intelligence Platform
           </div>
 
-          {/* Headline */}
           <h1
             id="hero-title"
-            className="font-serif font-light text-[#1C1207] leading-[1.06] mb-7"
-            style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5.5rem)', opacity: 0 }}
+            className="font-serif font-light leading-[1.06] mb-7"
+            style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5.8rem)', opacity: 0, color: 'var(--text-h)' }}
           >
             The law behind<br />
-            every <em className="italic text-[#B86520]">thriving</em><br />
+            every <em className="italic" style={{ color: 'var(--accent)' }}>thriving</em><br />
             <span className="block pl-10 relative">
-              <span className="absolute left-0 top-1/2 w-7 h-px bg-[#B86520]" aria-hidden="true" />
+              <span className="absolute left-0 top-1/2 w-7 h-px" style={{ background: 'var(--accent)' }} aria-hidden="true" />
               Kenyan business.
             </span>
           </h1>
 
-          {/* Description */}
           <p
             id="hero-desc"
-            className="text-[0.95rem] font-light text-[#8A7860] leading-[1.85] max-w-[480px] mb-10"
-            style={{ opacity: 0 }}
+            className="text-[0.95rem] font-light leading-[1.85] max-w-[480px] mb-10"
+            style={{ opacity: 0, color: 'var(--text-muted)' }}
           >
             Mwango Sheria is your AI-powered compliance engine — cutting through
             Kenya's intricate web of corporate law, tax obligations, and
             cross-border trade regulations so you can build with confidence.
           </p>
 
-          {/* Buttons */}
           <div id="hero-actions" className="flex gap-3 flex-wrap" style={{ opacity: 0 }}>
             <a href="#waitlist" className="btn-primary">
               Join the Waitlist
@@ -120,19 +104,19 @@ export default function Hero() {
           {/* Stats strip */}
           <div
             id="hero-stats"
-            className="flex mt-12 border border-[rgba(180,110,20,0.18)] rounded-md overflow-hidden max-w-[520px] bg-white shadow-[0_4px_20px_rgba(28,18,7,0.08)]"
-            style={{ opacity: 0 }}
+            className="flex mt-12 rounded-xl overflow-hidden max-w-[540px]"
+            style={{ opacity: 0, background: 'var(--bg-card-alt)', border: '1px solid var(--accent-border)', boxShadow: 'var(--shadow-md)' }}
           >
             {STATS.map((s, i) => (
               <div
                 key={s.label}
-                className="flex-1 px-4 py-3.5 transition-colors hover:bg-[rgba(180,110,20,0.05)] min-w-0"
-                style={{ borderRight: i < STATS.length - 1 ? '1px solid rgba(180,110,20,0.14)' : 'none' }}
+                className="flex-1 px-3 sm:px-4 py-3.5 min-w-0 cursor-default"
+                style={{ borderRight: i < STATS.length - 1 ? '1px solid var(--accent-border)' : 'none' }}
               >
-                <div className="font-serif text-[1.4rem] sm:text-[1.7rem] font-semibold text-[#B86520] leading-none mb-0.5 truncate">
+                <div className="font-serif text-[1.25rem] sm:text-[1.6rem] font-semibold leading-none mb-0.5 truncate" style={{ color: 'var(--accent)' }}>
                   {s.num}
                 </div>
-                <div className="text-[0.58rem] sm:text-[0.62rem] font-normal text-[#8A7860] tracking-[0.08em] uppercase leading-tight">
+                <div className="text-[0.53rem] sm:text-[0.6rem] font-normal tracking-[0.08em] uppercase leading-tight" style={{ color: 'var(--text-muted)' }}>
                   {s.label}
                 </div>
               </div>
@@ -140,7 +124,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT: Dashboard mockup — hidden on mobile */}
+        {/* RIGHT — dashboard, desktop only */}
         <div id="hero-right" className="hidden lg:block relative" style={{ opacity: 0 }}>
           <div className="relative">
             {[
@@ -150,8 +134,8 @@ export default function Hero() {
             ].map((p) => (
               <div
                 key={p.label}
-                className={`${p.cls} absolute flex items-center gap-2 px-3.5 py-2 rounded-[20px] text-[0.65rem] font-medium text-[#1C1207] whitespace-nowrap z-[3]`}
-                style={{ ...p.style, background: '#FFFFFF', border: '1px solid rgba(180,110,20,0.22)', boxShadow: '0 6px 20px rgba(28,18,7,0.1)' }}
+                className={`${p.cls} absolute flex items-center gap-2 px-3.5 py-2 rounded-[20px] text-[0.65rem] font-medium whitespace-nowrap z-[3]`}
+                style={{ ...p.style, background: 'var(--bg-card-alt)', border: '1px solid var(--accent-border)', boxShadow: 'var(--shadow-md)', color: 'var(--text-h)' }}
               >
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.dot }} />
                 {p.label}
@@ -162,18 +146,15 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Mobile: mini status pills */}
+      {/* Mobile status pills */}
       <div className="lg:hidden absolute bottom-6 left-5 right-5 z-[2] flex gap-2 flex-wrap justify-center">
         {[
           { dot: '#16a34a', label: 'eTIMS Active' },
           { dot: '#d97706', label: '14-day Alert' },
           { dot: '#2563eb', label: 'NSSF Tracked' },
         ].map((p) => (
-          <div
-            key={p.label}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.65rem] font-medium text-[#1C1207] bg-white shadow-sm"
-            style={{ border: '1px solid rgba(180,110,20,0.2)' }}
-          >
+          <div key={p.label} className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.65rem] font-medium"
+            style={{ background: 'var(--bg-card-alt)', border: '1px solid var(--accent-border)', boxShadow: 'var(--shadow-sm)', color: 'var(--text-h)' }}>
             <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.dot }} />
             {p.label}
           </div>
